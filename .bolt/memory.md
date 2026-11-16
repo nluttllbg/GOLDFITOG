@@ -21,10 +21,14 @@
 - Animations: GSAP + ScrollTrigger + Lenis (synced). Lenis for smooth scroll, GSAP for movements. Min duration 0.6s, eases `power3.out` / `expo.out`. Cinematic reveals, parallax on photos, pin-scroll for impact phrases.
 - Responsive from 360px upward; no horizontal scroll. Floating WhatsApp button bottom-right respecting safe areas.
 - Icons from `lucide-react` only.
-- Contact data: Av. Noêmia Tonello Dalmolin, 1029, Jardim Taiamã, Sorriso – MT, CEP 78893-148. Instagram `@goldsgym.sorriso`. WhatsApp `(66) 99724-7860`. Hours: Mon–Fri 05–11h & 14–22h, Sat 15–18h, Sun closed.
+- Internal navigation uses anchor links (`#inicio`, etc.) + smooth scroll; works under GitHub Pages subpath without basePath.
 
 ## Decisions, constraints & rationale
 
+- **Deployment target: GitHub Pages** (static hosting). Next.js configured with `output: 'export'` to generate static files in `out/`.
+- GitHub Actions workflow created (`.github/workflows/`) — auto-detects repo name for dynamic `basePath`, builds, and deploys to Pages.
+- `.nojekyll` file added to `public/` so GitHub Pages doesn't ignore the `_next/` folder (underscore-prefixed dirs are skipped by Jekyll by default).
+- Deploy source in GitHub repo Settings > Pages must be set to **GitHub Actions**, not "Deploy from a branch".
 - Do not invent facts (equipment counts, teacher/student numbers, testimonials, names, photos). Only present verifiable info.
 - Reviews section shows only the real public rating: 4,8 stars / 78 reviews — no fabricated testimonials.
 - CLAUDE.md created at project root enforcing Lenis+GSAP rule for all animations.
@@ -35,6 +39,8 @@
 
 ## Open questions & assumptions
 
+- Repository name on GitHub not yet confirmed by user; workflow auto-detects it but basePath correctness depends on this.
 - Real student testimonials/names/photos are not available — omitted intentionally until verified data is provided.
 - Specific equipment brands/counts and staff details unknown — not presented as fact.
 - Google Maps embed uses the provided address; exact map behavior on 360px screens verified visually but not tested on all devices.
+- GitHub Pages site URL will be `https://<user>.github.io/<repo-name>/`; custom domain not configured.
